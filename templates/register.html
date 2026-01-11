@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הירשם - NutriOptimal</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>📝 הירשם ל-NutriOptimal</h2>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullname">שם מלא *</label>
+                    <input type="text" id="fullname" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">כתובת אימייל *</label>
+                    <input type="email" id="email" required placeholder="example@gmail.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">מספר טלפון *</label>
+                    <input type="tel" id="phone" required placeholder="052-1234567">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">סיסמה *</label>
+                    <input type="password" id="password" required>
+                    <small style="color: #6b7280; font-size: 0.8rem;">לפחות 6 תווים</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">אימות סיסמה *</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+
+                <div id="errorMessage" style="color: #ef4444; margin-bottom: 15px; font-size: 0.9rem; display: none;"></div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">הירשם</button>
+            </form>
+
+            <p style="text-align: center; margin-top: 20px; color: #6b7280;">
+                כבר יש לך חשבון? <a href="/login" style="color: #3b82f6; text-decoration: none;">התחבר</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const fullname = document.getElementById('fullname').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorDiv = document.getElementById('errorMessage');
+            
+            if (!fullname || !email || !phone || !password || !confirmPassword) {
+                errorDiv.textContent = 'נא למלא את כל השדות';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorDiv.textContent = 'הסיסמאות אינן תואמות';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            errorDiv.style.display = 'none';
+
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ fullname, email, phone, password })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    window.location.href = '/dashboard';
+
+;
+                } else {
+                    errorDiv.textContent = result.message;
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorDiv.textContent = 'שגיאה בהרשמה. נסה שוב.';
+                errorDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

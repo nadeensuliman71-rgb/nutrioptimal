@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NutriOptimal</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        /* Ultra Compact Design */
+        .container {
+            max-width: 1100px;
+            padding: 10px;
+        }
+        
+        .header {
+            padding: 12px 20px;
+            margin-bottom: 15px;
+        }
+
+        .logo-section h1 {
+            font-size: 1.5rem;
+        }
+
+        .subtitle {
+            font-size: 0.75rem;
+        }
+
+        .form-section {
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .form-section h2 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .compact-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            font-size: 0.75rem;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            padding: 6px 10px;
+            font-size: 0.85rem;
+        }
+
+        .supermarket-grid {
+            gap: 12px;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .supermarket-card {
+            padding: 15px;
+        }
+
+        .supermarket-card img {
+            height: 50px;
+            margin-bottom: 8px;
+        }
+
+        .supermarket-card h3 {
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        .btn-large {
+            padding: 10px 25px;
+            font-size: 0.95rem;
+        }
+        
+        /* Beautiful Modal Styling */
+        .modal-checkbox-group {
+            display: grid;
+            gap: 12px;
+            margin: 25px 0;
+        }
+        
+        .modal-checkbox-label {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(14, 165, 233, 0.05);
+            border: 2px solid rgba(14, 165, 233, 0.2);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-checkbox-label:hover {
+            background: rgba(14, 165, 233, 0.1);
+            border-color: rgba(14, 165, 233, 0.4);
+            transform: translateX(-5px);
+        }
+        
+        .modal-checkbox-label input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            margin-left: 15px;
+            cursor: pointer;
+            accent-color: #0ea5e9;
+        }
+        
+        .modal-checkbox-label input[type="checkbox"]:checked + span {
+            font-weight: 700;
+            color: #0ea5e9;
+        }
+        
+        .modal-checkbox-label span {
+            flex: 1;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px 24px;
+            font-size: 1rem;
+        }
+        /* ביטול מסגרת לכפתור PDF בלבד */
+        .btn-outline {
+            border: none !important;
+        }
+
+
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-section">
+                <h1> NutriOptimal</h1>
+                <p class="subtitle">לוח בקרה - תכנון תפריטים</p>
+            </div>
+            <div class="nav-buttons">
+                <!-- Main Navigation -->
+                <div class="main-nav">
+                    <a href="/dashboard" class="nav-btn active"> תכנון תפריט</a>
+                    <a href="/food-management" class="nav-btn"> ניהול מזונות</a>
+                </div>
+                <button onclick="logout()" class="btn btn-outline">התנתק</button>
+            </div>
+        </div>
+
+        <!-- Planning Section -->
+        <div id="planningSection">
+            <!-- Nutrition Parameters -->
+            <div class="form-section">
+                <h2>⚙️ הגדרת פרמטרים תזונתיים</h2>
+                
+                <!-- Row 1 - Number of Days ONLY -->
+                <div class="compact-row" style="grid-template-columns: 200px; margin-bottom: 15px;">
+                    <div class="form-group">
+                        <label for="numDays">מספר ימים</label>
+                        <input type="number" id="numDays" value="7" min="1" max="30">
+                    </div>
+                </div>
+
+                <!-- Row 2 - Protein & Calories -->
+                <div class="compact-row">
+                    <div class="form-group">
+                        <label for="minProtein">חלבון מינימום (גרם)</label>
+                        <input type="number" id="minProtein" value="56" min="0" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxProtein">חלבון מקסימום (גרם)</label>
+                        <input type="number" id="maxProtein" value="100" min="0" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="minCalories">קלוריות מינימום</label>
+                        <input type="number" id="minCalories" value="2000" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxCalories">קלוריות מקסימום</label>
+                        <input type="number" id="maxCalories" value="2700" min="0">
+                    </div>
+                </div>
+
+                <!-- Row 3 - Fat & Carbs -->
+                <div class="compact-row">
+                    <div class="form-group">
+                        <label for="minCarbs">פחמימות מינימום (גרם)</label>
+                        <input type="number" id="minCarbs" value="150" min="0" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxCarbs">פחמימות מקסימום (גרם)</label>
+                        <input type="number" id="maxCarbs" value="300" min="0" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="minFat">שומן מינימום (גרם)</label>
+                        <input type="number" id="minFat" value="70" min="0" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxFat">שומן מקסימום (גרם)</label>
+                        <input type="number" id="maxFat" value="90" min="0" step="0.1">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculate Button -->
+            <div class="form-section">
+                <div style="text-align: center;">
+                    <button onclick="openPriceSourceModal()" class="btn btn-primary btn-large">🚀 חשב תפריט</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="loading">
+            <div class="spinner"></div>
+            <p style="font-size: 0.9rem; color: var(--text-dark);">מחשב תפריט אופטימלי...</p>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" style="display: none;">
+            <!-- Chosen Supermarket -->
+            <div id="chosenSourceBox" style="margin-bottom: 15px; font-weight: bold; font-size: 1rem; color: #2c3e50;">
+            </div>
+
+            <!-- Days Carousel -->
+            <div class="results-section">
+                
+                <div class="results-header">
+                    <h2>📅 תפריט יומי</h2>
+                </div>
+
+                <div class="days-carousel">
+                    <div class="days-container" id="daysContainer">
+                        <!-- Days will be inserted here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overall Summary -->
+            <div class="overall-summary">
+                <h3> סיכום כללי - <span id="summaryDays">7</span> ימים</h3>
+                
+                <div class="cost-summary">
+                    <div class="cost-card">
+                        <div class="amount" id="totalCost">₪238.36</div>
+                        <div class="label">עלות כוללת</div>
+                    </div>
+                    
+                    <div class="cost-card">
+                        <div class="amount" id="avgCostPerDay">₪34.05</div>
+                        <div class="label">עלות ממוצעת ליום</div>
+                    </div>
+                </div>
+
+                <div class="daily-averages">
+                    <div class="average-card protein">
+                        <div class="value" id="avgProtein">86.6</div>
+                        <div class="label">ממוצע חלבון (גרם)</div>
+                    </div>
+                    
+                    <div class="average-card carbs">
+                        <div class="value" id="avgCarbs">271.1</div>
+                        <div class="label">ממוצע פחמימות (גרם)</div>
+                    </div>
+                    
+                    <div class="average-card calories">
+                        <div class="value" id="avgCalories">2000</div>
+                        <div class="label">ממוצע קלוריות</div>
+                    </div>
+                    
+                    <div class="average-card fat">
+                        <div class="value" id="avgFat">70.0</div>
+                        <div class="label">ממוצע שומן (גרם)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div style="text-align: center; margin-top: 15px; margin-bottom: 20px;">
+                <button onclick="generateShoppingList()" class="btn btn-primary">🛒 צור רשימת קניות</button>
+                <button onclick="exportMenuToExcel()" class="btn btn-success" style="margin-right: 10px;">
+                    📥 ייצא לאקסל
+                </button>
+                <button onclick="exportMenuToPDF()" class="btn btn-outline" style="margin-right: 10px;">
+                    📄 ייצא ל-PDF
+                </button>
+
+
+                <button onclick="showPlanSection()" class="btn btn-secondary" style="margin-right: 10px;">
+                    🔄 חשב תפריט חדש
+                </button>
+                <div id="shoppingListContainer"style="display:none; margin-top:20px;">
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    
+    <!-- Beautiful Modal for Price Source Selection -->
+    <div id="priceSourceModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2> בחרי מקור מחיר</h2>
+                <button class="close-modal" onclick="closePriceSourceModal()">×</button>
+            </div>
+
+            <div class="modal-checkbox-group">
+                <label class="modal-checkbox-label">
+                    <input type="checkbox" name="priceSource" value="manual">
+                    <span> ידני</span>
+                </label>
+                
+                <label class="modal-checkbox-label">
+                    <input type="checkbox" name="priceSource" value="victory">
+                    <span> ויקטורי</span>
+                </label>
+                
+                <label class="modal-checkbox-label">
+                    <input type="checkbox" name="priceSource" value="shufersal">
+                    <span> שופרסל</span>
+                </label>
+                
+                <label class="modal-checkbox-label">
+                    <input type="checkbox" name="priceSource" value="rami_levy">
+                    <span> רמי לוי</span>
+                </label>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn btn-primary" onclick="confirmPriceSources()">אישור ✓</button>
+                <button class="btn btn-outline" onclick="closePriceSourceModal()">ביטול</button>
+            </div>
+        </div>
+    </div>
+    <!-- 🛒 Shopping List Modal -->
+    <div id="shoppingListModal" class="modal" style="display:none;">
+        <div class="modal-content" style="max-width:600px;">
+            <div class="modal-header">
+                <h2>🛒 רשימת קניות</h2>
+                <button class="close-modal" onclick="closeShoppingListModal()">×</button>
+            </div>
+
+            <div id="shoppingListText"
+                style="
+                    max-height:400px;
+                    overflow-y:auto;
+                    white-space:pre-wrap;
+                    font-family:inherit;
+                    font-size:1rem;
+                    line-height:1.6;
+                    padding:10px;
+                ">
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn btn-success" onclick="exportShoppingListExcel()">📥 ייצוא לאקסל</button>
+                <button class="btn btn-secondary" onclick="exportShoppingListPDF()">📄 ייצוא ל-PDF</button>
+               <button class="btn btn-primary" onclick="closeShoppingListModal()">סגור</button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

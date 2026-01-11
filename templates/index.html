@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriOptimal - תכנון תפריטים חכם</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .landing-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ed8728 0%, #fbb825 50%, #fbcf67 100%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .landing-header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .landing-logo {
+            color: #000000;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(139, 90, 60, 0.3);
+        }
+
+        .landing-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .landing-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .hero-main {
+            text-align: center;
+            color: #000000;
+            margin-bottom: 60px;
+        }
+
+        .hero-main h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(139, 90, 60, 0.2);
+        }
+
+        .hero-main p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            color: #2d1810;
+            font-weight: 500;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #fff5e6 0%, #fbe8c9 100%);
+            color: #000000;
+            padding: 15px 40px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(139, 90, 60, 0.4);
+            border: 3px solid #f6ca97;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(139, 90, 60, 0.5);
+            background: linear-gradient(135deg, #fbe8c9 0%, #fbcf67 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(251, 232, 201, 0.9) 0%, rgba(246, 202, 151, 0.9) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 3px solid rgba(246, 202, 151, 0.6);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(135deg, rgba(251, 184, 37, 0.95) 0%, rgba(237, 135, 40, 0.95) 100%);
+            border-color: #ed8728;
+            box-shadow: 0 12px 35px rgba(139, 90, 60, 0.4);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #000000;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: #2d1810;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .hero-main h1 {
+                font-size: 2rem;
+            }
+
+            .hero-main p {
+                font-size: 1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-container">
+        <!-- Header -->
+        <div class="landing-header">
+            <div class="landing-logo">
+                 NutriOptimal
+            </div>
+            <div class="landing-buttons">
+                <a href="/login" class="btn btn-outline">התחבר</a>
+                <a href="/register" class="btn" style="background: linear-gradient(135deg, #fff5e6, #fbe8c9); color: #000000; border: 2px solid #f6ca97;">הירשם</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="landing-content">
+            <div class="hero-container">
+                <!-- Hero Section -->
+                <div class="hero-main">
+                    <h1> תכנון תפריטים מבוסס אלגוריתמים</h1>
+                    <p>
+                        מערכת מתקדמת המשתמשת באלגוריתמי MILP ליצירת תפריטים אופטימליים<br>
+                        המותאמים למטרות התזונה שלך ולתקציב שלך
+                    </p>
+                    <a href="/register" class="cta-button">התחל עכשיו בחינם </a>
+                </div>
+
+                <!-- Features -->
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"></div>
+                        <h3>אופטימיזציה מדויקת</h3>
+                        <p>אלגוריתמי MILP מתקדמים לחישוב התפריט המושלם עבורך</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon"></div>
+                        <h3>ניתוח תזונתי מפורט</h3>
+                        <p>מעקב אחר חלבון, קלוריות, פחמימות ושומנים בכל ארוחה</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon"></div>
+                        <h3>שילוב עם סופרמרקטים</h3>
+                        <p>מחירים מעודכנים מרשתות מובילות למציאת העסקאות הטובות ביותר</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon"></div>
+                        <h3>התאמה אישית</h3>
+                        <p>התאם את התפריט למטרות שלך, להעדפות ולתקציב</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

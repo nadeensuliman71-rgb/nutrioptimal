@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>התחברות - NutriOptimal</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2> התחבר ל-NutriOptimal</h2>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">כתובת אימייל *</label>
+                    <input type="email" id="email" required placeholder="example@gmail.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">סיסמה *</label>
+                    <input type="password" id="password" required>
+                </div>
+
+                <div id="errorMessage" style="color: #ef4444; margin-bottom: 15px; font-size: 0.9rem; display: none;"></div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">התחבר</button>
+            </form>
+
+            <p style="text-align: center; margin-top: 20px; color: #6b7280;">
+                עדיין אין לך חשבון? <a href="/register" style="color: #3b82f6; text-decoration: none;">הירשם</a>
+            </p>
+            
+            <p style="text-align: center; margin-top: 15px;">
+                <a href="/" style="color: #6b7280; text-decoration: none;">← חזור לדף הבית</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('errorMessage');
+            
+            if (!email || !password) {
+                errorDiv.textContent = 'נא למלא את כל השדות';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            errorDiv.style.display = 'none';
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    window.location.href = '/food-management';
+
+                } else {
+                    errorDiv.textContent = result.message;
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorDiv.textContent = 'שגיאה בהתחברות. נסה שוב.';
+                errorDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

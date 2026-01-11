@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ניהול מזונות - NutriOptimal</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        /* COMPACT TABLE DESIGN */
+        .container {
+            max-width: 95%;
+            padding: 15px;
+        }
+        
+        .food-table {
+            font-size: 0.8rem;
+        }
+        
+        .food-table th,
+        .food-table td {
+            padding: 8px 10px;
+        }
+        
+        .food-table th {
+            font-size: 0.8rem;
+        }
+        
+        /* Price header with button */
+        .price-header-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .price-source-header-btn {
+            padding: 4px 10px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-teal));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .price-source-header-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+        }
+        
+        .filter-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .filter-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+        }
+        
+        .filter-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-radius: 16px;
+            min-width: 280px;
+            z-index: 1000;
+            margin-top: 10px;
+            overflow: hidden;
+            border: 2px solid rgba(14, 165, 233, 0.1);
+        }
+        
+        .filter-menu.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .filter-accordion {
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .filter-accordion:last-of-type {
+            border-bottom: none;
+        }
+        
+        .accordion-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s ease;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .accordion-header:hover {
+            background: rgba(14, 165, 233, 0.05);
+        }
+        
+        .accordion-arrow {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+        
+        .accordion-arrow.open {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            padding: 0 20px 15px 20px;
+        }
+        
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            cursor: pointer;
+        }
+        
+        .filter-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+            accent-color: #0ea5e9;
+        }
+        
+        .filter-checkbox span {
+            flex: 1;
+        }
+        
+        .active-filter {
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-teal));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-left: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(20, 184, 166, 0.3);
+        }
+        
+        .clear-filter {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .clear-filter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Sortable table headers */
+        .sortable-header {
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            padding-right: 25px;
+            transition: background-color 0.2s;
+        }
+
+        .sortable-header:hover {
+            background-color: rgba(14, 165, 233, 0.05);
+        }
+
+        .sortable-header::after {
+            content: '↕';
+            position: absolute;
+            left: 8px;
+            opacity: 0.3;
+            font-size: 0.8em;
+        }
+
+        .sortable-header.asc::after {
+            content: '↑';
+            opacity: 1;
+            color: var(--primary-blue);
+        }
+
+        .sortable-header.desc::after {
+            content: '↓';
+            opacity: 1;
+            color: var(--primary-blue);
+        }
+        
+        /* Compact buttons in table */
+        .btn-edit, .btn-delete {
+            padding: 5px 10px;
+            font-size: 0.7rem;
+            margin: 0 2px;
+        }
+        
+        .category-badge {
+            padding: 3px 10px;
+            font-size: 0.7rem;
+        }
+        
+        .meal-tag {
+            padding: 2px 6px;
+            font-size: 0.65rem;
+        }
+        
+        /* Selected supermarket display */
+        .selected-supermarket-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-teal));
+            color: white;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+  
+        .foods-title {
+            margin: 0;
+            line-height: 1.25;
+            text-align: right;
+        }
+
+        .foods-subtitle {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-top: 6px;
+
+            /* 🔥 זה החלק שמיישר להתחלה של "רשימת" */
+            padding-right: 32px; /* רוחב האייקון 📋 */
+        }
+        /* חלון הוראות גדול */
+        #instructionsModal .modal-content {
+            width: 700px;
+            height: 550px;
+            max-width: none;
+            max-height: none;
+        }
+
+
+
+        
+  </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-section">
+                <h1>🥗 NutriOptimal</h1>
+                <p class="subtitle">ניהול מזונות</p>
+            </div>
+
+            <div class="nav-buttons">
+                <div class="main-nav">
+                    <a href="/dashboard" class="nav-btn">📊 תכנון תפריט</a>
+                    <a href="/food-management" class="nav-btn active">🍎 ניהול מזונות</a>
+                    <button onclick="showInstructionsModal()" class="nav-btn">
+                        📖 הוראות הפעלה
+                    </button>
+                </div>
+
+                <button onclick="logout()" class="btn btn-outline">התנתק</button>
+            </div>
+        </div> <!-- ✅ סגירה של header -->
+
+
+
+        <!-- Food Management Section -->
+        <div class="food-table-container">
+            <div class="table-header">
+                <h2 class="foods-title">
+                    📋 רשימת מזונות
+                    <span class="foods-subtitle">לפי 100 גרם</span>
+                </h2>
+
+                <div>
+                    <!-- Filter Dropdown -->
+                    <div class="filter-dropdown">
+                        <button class="filter-btn" onclick="toggleFilterMenu()">🔍 סינון</button>
+                        <div class="filter-menu" id="filterMenu">
+                            <!-- Category Filter -->
+                            <div class="filter-accordion">
+                                <div class="accordion-header" onclick="toggleAccordion('category')">
+                                    <span>📁 קטגוריה</span>
+                                    <span class="accordion-arrow" id="category-arrow">▼</span>
+                                </div>
+                                <div class="accordion-content" id="category-content" style="display: none;">
+                                    <label class="filter-checkbox">
+                                        <input type="checkbox" name="category" value="protein" onchange="applyFilters()">
+                                        <span>חלבון</span>
+                                    </label>
+                                    <label class="filter-checkbox">
+                                        <input type="checkbox" name="category" value="carb" onchange="applyFilters()">
+                                        <span>פחמימה</span>
+                                    </label>
+                                    <label class="filter-checkbox">
+                                        <input type="checkbox" name="category" value="vegetable" onchange="applyFilters()">
+                                        <span>ירק</span>
+                                    </label>
+                                    <label class="filter-checkbox">
+                                        <input type="checkbox" name="category" value="fruit" onchange="applyFilters()">
+                                        <span>פרי</span>
+                                    </label>
+                                    <label class="filter-checkbox">
+                                        <input type="checkbox" name="category" value="fat" onchange="applyFilters()">
+                                        <span>שומן</span>         
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Meal Filter -->
+                            <div class="filter-accordion">
+                                <div class="accordion-header" onclick="toggleAccordion('meal')">
+                                    <span>🍽️ ארוחה</span>
+                                    <span class="accordion-arrow" id="meal-arrow">▼</span>
+                                </div>
+                                <div class="accordion-content" id="meal-content" style="display: none;">
+                                    <label class="filter-checkbox">
+                                        <input type="checkbox" name="meal" value="breakfast" onchange="applyFilters()">
+                                        <span>ארוחת בוקר</span>
+                                    </label>
+                                    <label class="filter-checkbox">
+                                        <input type="checkbox" name="meal" value="lunch" onchange="applyFilters()">
+                                        <span>ארוחת צהריים</span>
+                                    </label>
+                                    <label class="filter-checkbox">
+                                        <input type="checkbox" name="meal" value="dinner" onchange="applyFilters()">
+                                        <span>ארוחת ערב</span>
+                                    </label>
+                                    <label class="filter-checkbox">
+                                        <input type="checkbox" name="meal" value="snacks" onchange="applyFilters()">
+                                        <span>תוספות</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="updatePricesBtn" class="btn btn-primary" style="margin-right: 10px; background: var(--gradient-warm) !important; color: #000000 !important; box-shadow: 0 4px 15px rgba(237, 135, 40, 0.4) !important;">
+                        🔄 עדכן מחירים מהסופרים
+                    </button>
+                    <div id="priceStatus" style="margin-top:10px; font-weight: 600;"></div>
+                    <div id="lastUpdateText" style="margin-top:6px; font-size:0.9rem; color:var(--text-gray);">
+                         טוען זמן עדכון מחירים...
+                    </div>
+                    <button onclick="openAddFoodModal()" class="btn btn-primary" style="margin-right: 10px;">
+                        ➕ הוסף מזון
+                    </button>
+                    <button onclick="saveList()" class="btn btn-primary" style="margin-right: 10px;">
+                        <span style="font-size: 1.2em;">📥</span> ייצא לאקסל
+                    </button>
+                </div>
+            </div>
+
+            <!-- Active Filters Display -->
+            <div id="activeFilters" style="margin: 15px 0; min-height: 30px;">
+                <!-- Active filters will be shown here -->
+            </div>
+            
+            <!-- Selected Supermarket Display -->
+            <div id="selectedSupermarketDisplay" style="margin: 10px 0;">
+                <!-- Will show selected supermarket -->
+            </div>
+
+            <table class="food-table">
+                <thead>
+                    <tr>
+                        <th>שם</th>
+                        <th>חלבון (גרם)</th>
+                        <th>קלוריות</th>
+                        <th>פחמימות (גרם)</th>
+                        <th>שומן (גרם)</th>
+                        <th class="sortable-header" onclick="sortByPrice()">
+                            <div class="price-header-container">
+                                <span>מחיר</span>
+                                <button class="price-source-header-btn" onclick="event.stopPropagation(); openPriceSourceModal()">🏪 סופר</button>
+                            </div>
+                        </th>
+                        <th>קטגוריה</th>
+                        <th>ארוחות מתאימות</th>
+                        <th>פעולות</th>
+                    </tr>
+                </thead>
+                <tbody id="foodTableBody">
+                    <!-- Foods will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add/Edit Food Modal -->
+    <div id="foodModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">הוסף מזון חדש</h2>
+                <button class="close-modal" onclick="closeFoodModal()">×</button>
+            </div>
+
+            <form id="foodForm">
+                <input type="hidden" id="foodId">
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="foodName">שם המזון *</label>
+                        <input type="text" id="foodName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="foodCategory">קטגוריה *</label>
+                        <select id="foodCategory" required>
+                            <option value="" selected>בחר קטגוריה</option>
+                            <option value="protein">חלבון</option>
+                            <option value="carb">פחמימה</option>
+                            <option value="vegetable">ירק</option>
+                            <option value="fruit">פרי</option>
+                            <option value="fat">שומן</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="foodProtein">חלבון (גרם ל-100 גרם) *</label>
+                        <input type="number" id="foodProtein" step="0.1" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="foodCalories">קלוריות (ל-100 גרם) *</label>
+                        <input type="number" id="foodCalories" step="1" min="0" required>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="foodCarbs">פחמימות (גרם ל-100 גרם) *</label>
+                        <input type="number" id="foodCarbs" step="0.1" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="foodFat">שומן (גרם ל-100 גרם) *</label>
+                        <input type="number" id="foodFat" step="0.1" min="0" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="foodPrice">מחיר (ש"ח ל-100 גרם) *</label>
+                    <input type="number" id="foodPrice" step="0.01" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label>ארוחות מתאימות *</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="meals" value="breakfast">
+                            <span>ארוחת בוקר</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="meals" value="lunch">
+                            <span>ארוחת צהריים</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="meals" value="dinner">
+                            <span>ארוחת ערב</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="meals" value="snacks">
+                            <span>תוספות</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 25px;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">שמור ✓</button>
+                    <button type="button" onclick="closeFoodModal()" class="btn btn-outline" style="flex: 1;">ביטול</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Price Source Modal -->
+    <div id="priceSourceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏪 בחרי מקור מחיר</h2>
+                <button class="close-modal" onclick="closePriceSourceModal()">×</button>
+            </div>
+
+            <div style="display: grid; gap: 12px; margin: 25px 0;">
+                <label class="modal-checkbox-label" style="display: flex; align-items: center; padding: 15px 20px; background: rgba(14, 165, 233, 0.05); border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; cursor: pointer;">
+                    <input type="radio" name="priceSource" value="manual" style="width: 24px; height: 24px; margin-left: 15px; accent-color: #0ea5e9;">
+                    <span style="flex: 1; font-size: 1.05rem;">✏️ מחיר ידני</span>
+                </label>
+                
+                <label class="modal-checkbox-label" style="display: flex; align-items: center; padding: 15px 20px; background: rgba(14, 165, 233, 0.05); border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; cursor: pointer;">
+                    <input type="radio" name="priceSource" value="shufersal" style="width: 24px; height: 24px; margin-left: 15px; accent-color: #0ea5e9;">
+                    <span style="flex: 1; font-size: 1.05rem;">🛒 שופרסל</span>
+                </label>
+                
+                <label class="modal-checkbox-label" style="display: flex; align-items: center; padding: 15px 20px; background: rgba(14, 165, 233, 0.05); border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; cursor: pointer;">
+                    <input type="radio" name="priceSource" value="victory" style="width: 24px; height: 24px; margin-left: 15px; accent-color: #0ea5e9;">
+                    <span style="flex: 1; font-size: 1.05rem;">🛍️ ויקטורי</span>
+                </label>
+                
+                <label class="modal-checkbox-label" style="display: flex; align-items: center; padding: 15px 20px; background: rgba(14, 165, 233, 0.05); border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; cursor: pointer;">
+                    <input type="radio" name="priceSource" value="rami_levy" style="width: 24px; height: 24px; margin-left: 15px; accent-color: #0ea5e9;">
+                    <span style="flex: 1; font-size: 1.05rem;">🟡 רמי לוי</span>
+                </label>
+            </div>
+
+            <div style="display: flex; gap: 15px; margin-top: 25px;">
+                <button class="btn btn-primary" onclick="confirmPriceSource()" style="flex: 1;">אישור ✓</button>
+                <button class="btn btn-outline" onclick="closePriceSourceModal()" style="flex: 1;">ביטול</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedPriceSource = 'manual'; // Default
+
+        function openPriceSourceModal() {
+            // Select current source
+            document.querySelector(`input[name="priceSource"][value="${selectedPriceSource}"]`).checked = true;
+            document.getElementById('priceSourceModal').classList.add('show');
+        }
+        
+        function closePriceSourceModal() {
+            document.getElementById('priceSourceModal').classList.remove('show');
+        }
+        
+        function confirmPriceSource() {
+            const selected = document.querySelector('input[name="priceSource"]:checked');
+            if (selected) {
+                selectedPriceSource = selected.value;
+                updateSelectedSupermarketDisplay();
+                loadFoods(); // Reload table with new prices
+            }
+            closePriceSourceModal();
+        }
+        
+        function updateSelectedSupermarketDisplay() {
+            const display = document.getElementById('selectedSupermarketDisplay');
+            const names = {
+                'manual': '✏️ מחיר ידני',
+                'shufersal': '🛒 שופרסל',
+                'victory': '🛍️ ויקטורי',
+                'rami_levy': '🟡 רמי לוי'
+            };
+            
+            display.innerHTML = `<span class="selected-supermarket-badge">מקור מחירים: ${names[selectedPriceSource]}</span>`;
+        }
+
+        // Filter functionality
+        function toggleFilterMenu() {
+            const menu = document.getElementById('filterMenu');
+            menu.classList.toggle('show');
+        }
+
+        function toggleAccordion(type) {
+            const content = document.getElementById(`${type}-content`);
+            const arrow = document.getElementById(`${type}-arrow`);
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                arrow.classList.add('open');
+            } else {
+                content.style.display = 'none';
+                arrow.classList.remove('open');
+            }
+        }
+
+        // Close filter menu ONLY when clicking outside (not on checkboxes)
+        document.addEventListener('click', function(event) {
+            const dropdown = document.querySelector('.filter-dropdown');
+            const filterMenu = document.getElementById('filterMenu');
+    
+            // אם לחצו על checkbox או על label - אל תסגור!
+            if (event.target.type === 'checkbox' || event.target.closest('.filter-checkbox')) {
+                return;
+    }
+    
+            // אם לחצו מחוץ לתפריט - סגור
+            if (!dropdown.contains(event.target)) {
+            filterMenu.classList.remove('show');
+            }
+        });
+
+        // Sort functionality
+        let priceSortDirection = 'none';
+
+        function sortByPrice() {
+            if (priceSortDirection === 'none' || priceSortDirection === 'desc') {
+                priceSortDirection = 'asc';
+            } else {
+                priceSortDirection = 'desc';
+            }
+            
+            const header = document.querySelector('th.sortable-header');
+            header.classList.remove('asc', 'desc');
+            if (priceSortDirection !== 'none') {
+                header.classList.add(priceSortDirection);
+            }
+            
+            displayFoods(getSortedFoods(foodsData));
+        }
+
+        function getSortedFoods(foods) {
+            if (priceSortDirection === 'none') {
+                return foods;
+            }
+            
+            const sorted = [...foods];
+            sorted.sort((a, b) => {
+                const priceA = a.prices?.[selectedPriceSource] || 0;
+                const priceB = b.prices?.[selectedPriceSource] || 0;
+                
+                return priceSortDirection === 'asc' ? priceA - priceB : priceB - priceA;
+            });
+            
+            return sorted;
+        }
+
+        
+        
+        // Initialize display
+        updateSelectedSupermarketDisplay();
+    </script>
+    <script src="/static/js/food-management.js"></script>
+</body>
+</html>
+    <!-- Instructions Modal -->
+    <div id="instructionsModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📖 הוראות הפעלה</h2>
+                <button class="close-modal" onclick="closeInstructionsModal()">×</button>
+            </div>
+            
+            <div id="instructionsSlides" style="text-align:center;">
+                <!-- Slide 1 -->
+                <div class="instruction-slide" id="slide1" style="display:block;">
+                    <img src="/static/images/instruction1.png" alt="עדכון מחירים" style="max-width:100%; border-radius:10px; margin-bottom:15px;">
+                    <p style="font-size:1.1rem; color:#333;">
+                        תלחץ על הכפתור <strong>"עדכון מחירים מהסופרים"</strong> כדי להטעין מחירים<br>
+                        תהליך זה יכול לקחת מספר דקות
+                    </p>
+                    <button onclick="nextSlide()" class="btn btn-primary" style="margin-top:15px;">המשך</button>
+                </div>
+                
+                <!-- Slide 2 -->
+                <div class="instruction-slide" id="slide2" style="display:none;">
+                    <img src="/static/images/instruction2.png" alt="רשימת מזון" style="max-width:100%; border-radius:10px; margin-bottom:15px;">
+                    <p style="font-size:1.1rem; color:#333;">
+                        ניתן להוסיף ולערוך רשימת מזון<br>
+                        מחירים עודכנים באופן אוטומטי
+                    </p>
+                    <button onclick="nextSlide()" class="btn btn-primary" style="margin-top:15px;">המשך</button>
+                </div>
+                
+                <!-- Slide 3 -->
+                <div class="instruction-slide" id="slide3" style="display:none;">
+                    <img src="/static/images/instruction3.png" alt="תפריט אישי" style="max-width:100%; border-radius:10px; margin-bottom:15px;">
+                    <p style="font-size:1.1rem; color:#333;">
+                        לחץ כדי להכין תפריט אישית אופטימלי
+                    </p>
+                    <button onclick="closeInstructionsModal()" class="btn btn-secondary" style="margin-top:15px;">סגור</button>
+                </div>
+            </div>
+            
+            <!-- Slide Indicators -->
+            <div style="display:flex; justify-content:center; gap:10px; margin-top:20px;">
+                <span class="slide-indicator active" data-slide="1" style="width:12px; height:12px; border-radius:50%; background:#ff6b35; cursor:pointer; transition:all 0.3s;"></span>
+                <span class="slide-indicator" data-slide="2" style="width:12px; height:12px; border-radius:50%; background:#ccc; cursor:pointer; transition:all 0.3s;"></span>
+                <span class="slide-indicator" data-slide="3" style="width:12px; height:12px; border-radius:50%; background:#ccc; cursor:pointer; transition:all 0.3s;"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 3;
+
+        function showInstructionsModal() {
+            document.getElementById('instructionsModal').style.display = 'block';
+            currentSlide = 1;
+            updateSlide();
+        }
+
+        function closeInstructionsModal() {
+            document.getElementById('instructionsModal').style.display = 'none';
+            currentSlide = 1;
+            updateSlide();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function updateSlide() {
+            // Hide all slides
+            for (let i = 1; i <= totalSlides; i++) {
+                document.getElementById('slide' + i).style.display = 'none';
+            }
+            
+            // Show current slide
+            document.getElementById('slide' + currentSlide).style.display = 'block';
+            
+            // Update indicators
+            const indicators = document.querySelectorAll('.slide-indicator');
+            indicators.forEach((indicator, index) => {
+                if (index + 1 === currentSlide) {
+                    indicator.style.background = '#ff6b35';
+                } else {
+                    indicator.style.background = '#ccc';
+                }
+            });
+        }
+
+        // Add click events to indicators
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.slide-indicator').forEach(indicator => {
+                indicator.addEventListener('click', function() {
+                    currentSlide = parseInt(this.getAttribute('data-slide'));
+                    updateSlide();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

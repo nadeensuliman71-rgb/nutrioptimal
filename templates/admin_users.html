@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ניהול משתמשים</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background: #f0f0f0;
+        }
+
+        .export-btn {
+            margin-bottom: 15px;
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .export-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<h2>📊 ניהול משתמשים</h2>
+
+<p>
+    סה"כ משתמשים רשומים:
+    <strong>{{ total_users }}</strong>
+</p>
+
+<!-- כפתור ייצוא לאקסל -->
+<a href="/admin/export-users">
+    <button class="export-btn">
+        📥 ייצוא משתמשים לאקסל
+    </button>
+</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>שם</th>
+            <th>אימייל</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for u in users %}
+        <tr>
+            <td>{{ u[0] }}</td>
+            <td>{{ u[1] }}</td>
+            <td>{{ u[2] }}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,1146 @@
+/* ===================================
+   NutriOptimal - Warm Sunset Theme 🌅
+   Beautiful Orange & Yellow Palette
+   =================================== */
+
+:root {
+    /* Sunset Color Palette */
+    --color-orange: #ed8728;
+    --color-gold: #fbb825;
+    --color-yellow: #fbcf67;
+    --color-cream: #fbe8c9;
+    --color-peach: #f6ca97;
+    --color-dark: #8b5a3c;
+    
+    /* Text Colors */
+    --text-primary: #000000;
+    --text-dark: #2d1810;
+    
+    /* Gradients */
+    --gradient-main: linear-gradient(135deg, #fbe8c9 0%, #fbcf67 50%, #fbb825 100%);
+    --gradient-warm: linear-gradient(135deg, #ed8728 0%, #fbb825 100%);
+    --gradient-soft: linear-gradient(135deg, #fbe8c9 0%, #f6ca97 100%);
+    --gradient-card: linear-gradient(135deg, #fff5e6 0%, #fbe8c9 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--gradient-main);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* ===================================
+   Container & Layout
+   =================================== */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ===================================
+   Header
+   =================================== */
+
+.header {
+    background: linear-gradient(135deg, #fff5e6 0%, #fbe8c9 100%);
+    padding: 20px 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(237, 135, 40, 0.3);
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 3px solid var(--color-gold);
+}
+
+.logo-section h1 {
+    font-size: 1.8rem;
+    background: var(--gradient-warm);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 5px;
+    font-weight: 800;
+}
+
+.subtitle {
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.main-nav {
+    display: flex;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+.nav-btn {
+    padding: 12px 24px;
+    background: var(--gradient-soft);
+    color: var(--text-primary);
+    border: 2px solid var(--color-peach);
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.nav-btn:hover {
+    background: var(--gradient-warm);
+    border-color: var(--color-orange);
+    color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(237, 135, 40, 0.4);
+}
+
+/* active נראה כמו כפתור רגיל */
+.nav-btn.active {
+    background: var(--gradient-soft);
+    border-color: var(--color-peach);
+    box-shadow: none;
+    color: var(--text-primary);
+}
+/* hover עובד גם על active */
+.nav-btn.active:hover {
+    background: var(--gradient-warm);
+    border-color: var(--color-orange);
+    color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(237, 135, 40, 0.4);
+}
+
+
+/* ===================================
+   Buttons
+   =================================== */
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: var(--gradient-warm);
+    color: #000000;
+    box-shadow: 0 4px 15px rgba(237, 135, 40, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(237, 135, 40, 0.5);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, var(--color-yellow), var(--color-gold));
+    color: #000000;
+    box-shadow: 0 4px 15px rgba(251, 184, 37, 0.4);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(251, 184, 37, 0.5);
+}
+
+.btn-outline {
+    background: var(--gradient-soft);
+    color: var(--text-primary);
+    border: 2px solid var(--color-orange);
+}
+
+.btn-outline:hover {
+    background: var(--gradient-warm);
+    color: #000000;
+    border-color: var(--color-orange);
+}
+
+/* ===================================
+   Form Elements
+   =================================== */
+
+.form-section {
+    background: linear-gradient(135deg, #fff5e6 0%, #fbe8c9 100%);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(237, 135, 40, 0.3);
+    margin-bottom: 20px;
+    border: 3px solid var(--color-peach);
+}
+
+.form-section h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--color-peach);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #fffbf5 0%, #fbe8c9 100%);
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color-orange);
+    box-shadow: 0 0 0 3px rgba(237, 135, 40, 0.2);
+    background: #fffbf5;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px;
+    border: 2px solid var(--color-peach);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background: var(--gradient-soft);
+}
+
+.checkbox-label:hover {
+    background: var(--gradient-warm);
+    border-color: var(--color-orange);
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+/* ===================================
+   Supermarket Cards
+   =================================== */
+
+.supermarket-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.supermarket-card {
+    background: var(--gradient-card);
+    border: 3px solid var(--color-peach);
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.supermarket-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--color-orange);
+    background: var(--gradient-warm);
+    box-shadow: 0 12px 35px rgba(237, 135, 40, 0.4);
+}
+
+.supermarket-card.selected {
+    border-color: var(--color-orange);
+    background: var(--gradient-warm);
+    box-shadow: 0 8px 25px rgba(237, 135, 40, 0.5);
+}
+
+.supermarket-card img {
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+.supermarket-card h3 {
+    font-size: 1.1rem;
+    color: #000000;
+    font-weight: 600;
+}
+
+/* ===================================
+   Loading Spinner
+   =================================== */
+
+.loading {
+    display: none;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.loading.show {
+    display: block;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    border: 5px solid rgba(237, 135, 40, 0.3);
+    border-top-color: var(--color-orange);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===================================
+   Results Section
+   =================================== */
+
+.results-section {
+    background: linear-gradient(135deg, #fff5e6 0%, #fbe8c9 100%);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(237, 135, 40, 0.3);
+    margin-bottom: 20px;
+    border: 3px solid var(--color-peach);
+}
+
+.results-header {
+    margin-bottom: 20px;
+}
+
+.results-header h2 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.days-carousel {
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.days-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 1200px) {
+    .days-container {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .days-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .days-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .days-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.day-card {
+    background: linear-gradient(135deg, #fff5e6 0%, #fbe8c9 100%);
+    border: 3px solid var(--color-orange);
+    border-radius: 16px;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(139, 90, 60, 0.3);
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.day-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(237, 135, 40, 0.4);
+}
+
+.day-card.selected {
+    border-color: var(--color-gold);
+    box-shadow: 0 5px 18px rgba(251, 184, 37, 0.5);
+    border-width: 4px;
+}
+
+.day-header {
+    text-align: center;
+    margin-bottom: 0;
+    padding: 15px;
+    border-bottom: 3px solid var(--color-orange);
+    background: var(--gradient-warm);
+}
+
+.day-number {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #000000;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.meals-grid {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+}
+
+.meal-section {
+    margin-bottom: 8px;
+}
+
+.meal-section:last-child {
+    margin-bottom: 0;
+}
+
+.meal-item {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.75rem;
+    border: none;
+    margin-bottom: 0;
+}
+
+.meal-name {
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+    text-align: right;
+    padding: 6px 8px;
+    background: var(--gradient-warm);
+    border-radius: 8px;
+}
+
+.meal-details {
+    color: #000000;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    margin-top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+/* Food item tags - each food in its own box */
+.meal-details > * {
+    background: linear-gradient(135deg, #fbe8c9 0%, #f6ca97 100%);
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 2px solid var(--color-peach);
+    display: inline-block;
+    font-weight: 600;
+    white-space: nowrap;
+    font-size: 0.7rem;
+}
+
+/* Daily Averages */
+.daily-averages {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.average-card {
+    background: var(--gradient-soft);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    border: 3px solid var(--color-peach);
+    transition: all 0.3s ease;
+}
+
+.average-card:hover {
+    border-color: var(--color-orange);
+    box-shadow: 0 6px 20px rgba(237, 135, 40, 0.4);
+    transform: translateY(-3px);
+}
+
+.average-card .label {
+    font-size: 0.9rem;
+    color: #000000;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.average-card .value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-orange);
+}
+
+.average-card.protein .value { 
+    color: #d97706;
+}
+
+.average-card.carbs .value { 
+    color: var(--color-gold);
+}
+
+.average-card.calories .value { 
+    color: var(--color-orange);
+}
+
+.average-card.fat .value { 
+    color: #ea580c;
+}
+
+/* ===================================
+   Food Table
+   =================================== */
+
+.food-table-container {
+    background: linear-gradient(135deg, #fff5e6 0%, #fbe8c9 100%);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(237, 135, 40, 0.3);
+    border: 3px solid var(--color-peach);
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.table-header h2 {
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.table-header > div {
+    display: flex;
+    gap: 10px;
+}
+
+.food-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.food-table thead {
+    background: var(--gradient-warm);
+}
+
+.food-table th {
+    padding: 14px 12px;
+    text-align: right;
+    font-weight: 600;
+    color: #000000;
+    border-bottom: 2px solid var(--color-orange);
+    font-size: 0.9rem;
+}
+
+.food-table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--color-peach);
+    color: #000000;
+    background: linear-gradient(135deg, #fffbf5 0%, #fff5e6 100%);
+}
+
+.food-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.food-table tbody tr:hover {
+    background: var(--gradient-soft);
+}
+
+.category-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.category-badge.protein {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.category-badge.carb {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    color: #92400e;
+}
+
+.category-badge.vegetable {
+    background: #d1fae5;
+    color: #059669;
+}
+
+.category-badge.fruit {
+    background: linear-gradient(135deg, var(--color-cream), var(--color-yellow));
+    color: #92400e;
+}
+
+.category-badge.fat {
+    background: #e9d5ff;
+    color: #581c87;
+}
+
+
+
+
+.meal-tags {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.meal-tag {
+    padding: 4px 10px;
+    background: var(--gradient-soft);
+    border: 1px solid var(--color-peach);
+    border-radius: 10px;
+    font-size: 0.75rem;
+    color: #000000;
+}
+
+.btn-edit, .btn-delete {
+    padding: 7px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.btn-edit {
+    background: var(--gradient-warm);
+    color: #000000;
+}
+
+.btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(237, 135, 40, 0.4);
+}
+
+.btn-delete {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+.btn-delete:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+
+/* ===================================
+   Price Header Button
+   =================================== */
+
+.price-header-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.price-source-header-btn {
+    padding: 5px 12px;
+    background: var(--gradient-warm);
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.price-source-header-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(237, 135, 40, 0.4);
+}
+
+/* ===================================
+   Modal
+   =================================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(139, 90, 60, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #fff5e6 0%, #fbe8c9 100%);
+    padding: 25px;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(237, 135, 40, 0.5);
+    border: 3px solid var(--color-orange);
+    animation: slideUp 0.3s ease;
+    margin: auto;
+    position: relative;
+}
+
+@keyframes slideUp {
+    from { 
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--color-peach);
+}
+
+.modal-header h2 {
+    font-size: 1.5rem;
+    color: #000000;
+    font-weight: 700;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.close-modal:hover {
+    color: var(--color-orange);
+    background: var(--gradient-soft);
+    transform: rotate(90deg);
+}
+
+/* ===================================
+   Auth Pages
+   =================================== */
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-main);
+    background-attachment: fixed;
+}
+
+.auth-box {
+    background: linear-gradient(135deg, #fff5e6 0%, #fbe8c9 100%);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(237, 135, 40, 0.4);
+    max-width: 450px;
+    width: 90%;
+    border: 3px solid var(--color-gold);
+}
+
+.auth-box h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #000000;
+    font-weight: 700;
+    font-size: 1.8rem;
+    background: var(--gradient-warm);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===================================
+   Cost Summary
+   =================================== */
+
+.cost-summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.cost-card {
+    background: var(--gradient-soft);
+    padding: 20px;
+    border-radius: 12px;
+    border: 3px solid var(--color-peach);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.cost-card:hover {
+    border-color: var(--color-orange);
+    box-shadow: 0 6px 20px rgba(237, 135, 40, 0.4);
+    transform: translateY(-2px);
+}
+
+.cost-card .label {
+    font-size: 0.9rem;
+    color: #000000;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.cost-card .value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-orange);
+}
+
+/* ===================================
+   Responsive Design
+   =================================== */
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .main-nav {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .nav-btn {
+        flex: 1;
+        text-align: center;
+    }
+
+    .supermarket-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .daily-averages {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cost-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .checkbox-group {
+        grid-template-columns: 1fr;
+    }
+    
+    .day-card {
+        min-width: 140px;
+        max-width: 140px;
+    }
+}
+
+/* ===================================
+   Additional Fixes for Food Management Page
+   =================================== */
+
+/* Making all input placeholders black */
+::placeholder {
+    color: #000000 !important;
+    opacity: 1 !important;
+}
+
+:-ms-input-placeholder {
+    color: #000000 !important;
+}
+
+::-ms-input-placeholder {
+    color: #000000 !important;
+}
+
+/* Search and filter inputs */
+input[type="text"],
+input[type="search"],
+input[type="number"] {
+    color: #000000 !important;
+}
+
+/* Select dropdowns */
+select option {
+    color: #000000 !important;
+    background: #ffffff !important;
+}
+
+/* Button text that might be white */
+button {
+    color: #000000 !important;
+}
+
+/* Any remaining white text */
+* {
+    color: #000000 !important;
+}
+
+/* Except for buttons that should stay with their gradient */
+.btn-primary,
+.btn-secondary,
+.nav-btn.active,
+.btn-edit {
+    color: #000000 !important;
+}
+
+/* White text only on delete buttons */
+.btn-delete {
+    color: #ffffff !important;
+}
+
+/* Table cell text */
+table td,
+table th {
+    color: #000000 !important;
+}
+
+/* Form labels */
+label {
+    color: #000000 !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: #000000 !important;
+}
+
+/* Paragraphs and spans */
+p, span, div {
+    color: #000000 !important;
+}
+
+/* ===================================
+   Meal Sections - Each food in a box
+   =================================== */
+
+.meal-section {
+    margin-bottom: 10px;
+}
+
+.meal-section:last-child {
+    margin-bottom: 0;
+}
+
+.meal-section h4 {
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    margin-bottom: 6px !important;
+    padding: 6px 8px !important;
+    background: var(--gradient-warm) !important;
+    border-radius: 8px !important;
+    text-align: right !important;
+}
+
+.food-item {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    background: linear-gradient(135deg, #fbe8c9 0%, #f6ca97 100%) !important;
+    padding: 4px 8px !important;
+    border-radius: 6px !important;
+    border: 2px solid var(--color-peach) !important;
+    margin: 0 3px 4px 0 !important;
+    font-weight: 600 !important;
+    font-size: 0.7rem !important;
+    color: #000000 !important;
+}
+
+.food-item span {
+    color: #000000 !important;
+    display: inline !important;
+    margin: 0 !important;
+    font-size: 0.7rem !important;
+}
+
+.nutrition-summary {
+    padding: 10px !important;
+    background: linear-gradient(135deg, #fff5e6 0%, #fbe8c9 100%) !important;
+    border-top: 2px solid var(--color-orange) !important;
+    margin-top: 8px !important;
+}
+
+.nutrition-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+}
+
+.nutrition-item {
+    text-align: center !important;
+}
+
+.nutrition-item .label {
+    font-size: 0.7rem !important;
+    color: #000000 !important;
+    font-weight: 600 !important;
+    margin-bottom: 2px !important;
+}
+
+.nutrition-item .value {
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: var(--color-orange) !important;
+}
+
+/* Day Nutrition Summary */
+.day-nutrition-summary {
+    padding: 12px;
+    background: linear-gradient(135deg, #fff5e6 0%, #fbe8c9 100%);
+    border-top: 2px solid var(--color-orange);
+    margin-top: auto;
+}
+
+.day-nutrition-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.day-nutrition-item {
+    text-align: center;
+    padding: 6px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+}
+
+.day-nutrition-item .label {
+    font-size: 0.7rem;
+    color: #000000;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.day-nutrition-item .value {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-orange);
+}
+
+.meal-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.food-tag {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #fbe8c9 0%, #f6ca97 100%);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 2px solid var(--color-peach);
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: #000000;
+    width: 100%;
+}
+
+.food-tag span {
+    color: #000000;
+}
