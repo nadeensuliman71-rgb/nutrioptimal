@@ -1,11 +1,11 @@
 [phases.setup]
 nixPkgs = ["python311", "chromium", "chromedriver"]
+nixLibs = ["glibc"]
 
 [phases.install]
-cmds = ["pip install -r requirements.txt"]
-
-[phases.build]
-cmds = []
+cmds = [
+    "pip install -r requirements.txt"
+]
 
 [start]
-cmd = "gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 2"
+cmd = "export CHROME_BIN=/nix/store/$(ls /nix/store | grep chromium | head -1)/bin/chromium && gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 2"

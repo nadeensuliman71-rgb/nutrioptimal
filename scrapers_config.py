@@ -23,26 +23,22 @@ def get_chrome_driver():
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
     
-    # אם רצים ב-Railway (Linux)
-    if os.getenv('RAILWAY_ENVIRONMENT'):
-        # Railway מספק Chromium דרך nixpacks.toml
-        options.binary_location = "/nix/store/*/bin/chromium"
+    # אם רצים ב-Railway
+    if os.getenv('RAILWAY_ENVIRONMENT') or os.getenv('CHROME_BIN'):
+        chrome_bin = os.getenv('CHROME_BIN')
+        if chrome_bin:
+            options.binary_location = chrome_bin
         
         try:
-            # ננסה למצוא את chromedriver
             driver = webdriver.Chrome(options=options)
+            return driver
         except Exception as e:
             print(f"⚠️ Error with Railway Chrome: {e}")
-            # Fallback to webdriver-manager
-            driver = webdriver.Chrome(
-                service=Service(ChromeDriverManager().install()),
-                options=options
-            )
-    else:
-        # פיתוח מקומי
-        driver = webdriver.Chrome(
-            service=Service(ChromeDriverManager().install()),
-            options=options
-        )
+    
+    # פיתוח מקומי
+    driver = webdriver.Chrome(
+        service=Service(ChromeDriverManager().install()),
+        options=options
+    )
     
     return driver
